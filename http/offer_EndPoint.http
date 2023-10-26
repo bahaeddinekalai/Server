@@ -1,0 +1,2 @@
+# Get all offers
+GET  {{baseUrl}}/offers HTTP/1.1

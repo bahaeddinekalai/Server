@@ -4,7 +4,10 @@ const reservationRoutes = require("./routes/reservationRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const offerRoutes = require("./routes/offerRoutes");
 const dotenv = require("dotenv");
-const { off } = require("./models/Reservation");
+const offersCleanupJob = require('./schedules/offersCleanup');
+
+// use offersCleanupJob 
+
 
 dotenv.config();
 const app = express();
@@ -32,4 +35,6 @@ app.use("/api", offerRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/ `);
+  offersCleanupJob;
 });
+

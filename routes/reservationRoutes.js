@@ -10,9 +10,6 @@ router.post('/reservations', reservationController.createReservation);
 router.get('/reservations/:reservationCode', reservationController.getReservationByCode);
 
 // Routes for Admin
-// List all reservations 
-router.get('/reservations', reservationController.listReservations);
-
 // Update a reservation 
 router.put('/reservations/:reservationId', reservationController.updateReservation);
 

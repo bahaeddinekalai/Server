@@ -21,7 +21,10 @@ async function createReservation(req, res) {
     const offer = await Offer.findOne({ offerNumber });
 
     if (!offer) {
-      return res.status(404).json({ error: 'Offer not found' });
+      return res.status(404).json({ error: 'Offer not found',offer });
+    }
+    if (offer.capacity <= 0) {
+      return res.status(400).json({ error: 'Not enough capacity in the offer' });
     }
     const reservation = new Reservation({
       firstName,
@@ -32,20 +35,16 @@ async function createReservation(req, res) {
       offer: offer.offerNumber,
       reservationCode,
     });
+    // Update offer capacity by subtracting 1 from the current capacity value in the database and save the updated offer
+    offer.capacity -= 1;
+    offer.isAvailable = false
+    await offer.save();
+    
     await reservation.save();
     res.json(reservation);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to create reservation" });
-  }
-}
-
-async function listReservations(req, res) {
-  try {
-    const reservations = await Reservation.find();
-    res.json(reservations);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch reservations" });
   }
 }
 
@@ -75,7 +74,6 @@ async function getReservationByCode(req, res) {
 
 module.exports = {
   createReservation,
-  listReservations,
   updateReservation,
   deleteReservation,
   getReservationByCode,

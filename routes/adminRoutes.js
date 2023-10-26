@@ -3,7 +3,6 @@ const router = express.Router();
 const adminAuthMiddleware = require("../middleware/adminAuth");
 const adminController = require("../controllers/adminController");
 const offerController = require("../controllers/offerController");
-const upload = require("../middleware/fileUpload");
 const Admin = require("../models/Admin");
 
 // Admin login route
@@ -31,22 +30,21 @@ router.post("/admin/register", adminController.createAdmin);
 router.post(
   "/admin/offers",
   adminAuthMiddleware,
-  upload.single("image"),
   offerController.createOffer
 );
 
 // Update an offer (protected by admin authentication)
 router.put(
-  "/admin/offers/:offerId",
+  "/admin/offers/:offerNumber",
   adminAuthMiddleware,
-  offerController.updateOffer
+  offerController.updateOfferByOfferNumber
 );
 
 // Delete an offer (protected by admin authentication)
 router.delete(
-  "/admin/offers/:offerId",
+  "/admin/offers/:offerNumber",
   adminAuthMiddleware,
-  offerController.deleteOffer
+  offerController.deleteOfferByOfferNumber
 );
 
 // Delete a reservation (for admin)

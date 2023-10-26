@@ -1,0 +1,25 @@
+# Create a reservation 
+POST {{baseUrl}}/reservations HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName":"test_baha", 
+    "lastName":"test_kalai",
+    "date":"2023-11-01",
+    "hours":"15:30", 
+    "numberOfPersons":"6",
+    "offerNumber":"8080"
+}
+
+###
+
+# get a reservation by it code (change[:reservationCode])
+GET  {{baseUrl}}/reservations/:reservationCode HTTP/1.1
+###
+
+# TODO: Update a reservation 
+
+# TODO: Delete a reservation 
+
+# TODO: Make this routes protected by form admin 
+#(Update a reservation,Delete a reservation)
